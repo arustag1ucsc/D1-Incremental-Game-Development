@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #03040b;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, #fff 99%, transparent),
+    radial-gradient(2px 2px at 35% 35%, #fff 99%, transparent),
+    radial-gradient(1px 1px at 75% 20%, #fff 99%, transparent),
+    radial-gradient(1px 1px at 90% 75%, #fff 99%, transparent),
+    radial-gradient(2px 2px at 55% 85%, #fff 99%, transparent),
+    radial-gradient(1px 1px at 20% 70%, #fff 99%, transparent);
+  background-size: 260px 230px;
+  background-repeat: repeat;
+}
+
+.gameTitle {
+  margin: 0;
+  color: #fff;
+  text-align: center;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+.moonImage {
+  display: block;
+  width: min(200px, 55vw);
+  height: auto;
+  cursor: pointer;
+  margin: 15px auto;
+  transition: transform 0.15s;
+}
+
+.moonImage:hover {
+  transform: scale(1.045);
+}
+
+.moonImage:active {
+  transform: scale(0.94);
+}
+
+.oreCounter {
+  display: block;
+  color: #fff;
+  font-size: clamp(2rem, 7vw, 3.2rem);
+  text-align: center;
+}
+
+.productionRate {
+  text-align: center;
+  color: #aab8d7;
+  font-size: 0.95rem;
+}
+
+.shopSection {
+  color: white;
+  margin: 30px auto;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.shopSection h2 {
+  color: #dbe5ff;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  margin-bottom: 15px;
+}
+
+.gameMessage {
+  color: white;
+  font-size: 15px;
+  margin: 8px 0;
+  color: var(--accent);
+  text-align: center;
+}
+
+.upgradeButton {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  padding: 12px;
+  background-color: #1f42a3;
+  color: white;
+  border: 1px solid #3e5da2;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.upgradeButtons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.upgradeButton:hover {
+  background-color: #1a2745;
+}
+
+.upgradeButton:active {
+  background-color: #182036;
+}
+
+.upgradeButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

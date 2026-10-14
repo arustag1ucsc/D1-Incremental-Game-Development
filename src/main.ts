@@ -1,7 +1,8 @@
 // Vite turns this import into a production-safe URL. Keep it as a file so
 // even this tiny example demonstrates a separately deployed asset.
 // @deno-types="./asset-url.d.ts"
-import tileUrl from "./assets/tile.svg?no-inline";
+import "./style.css";
+import moonUrl from "./assets/moon.gif?no-inline";
 import { Shop } from "./shop.ts";
 import { Inventory } from "./inventory.ts";
 import { items } from "./items.ts";
@@ -11,17 +12,21 @@ const shop = new Shop();
 export const inventory = new Inventory();
 
 const heading = document.createElement("h1");
-heading.textContent = "D1 project";
+heading.textContent = "Moon Miners";
+heading.className = "gameTitle";
 
 const image = document.createElement("img");
-image.src = tileUrl;
-image.alt = "A teal tile with a cream circle";
+image.src = moonUrl;
+image.alt = "rotaing gif of moon";
 image.width = 200;
 image.height = 200;
+image.id = "moonButton";
+image.className = "moonImage";
 
 const counterElement = document.createElement("span");
 counterElement.id = "ores";
 counterElement.textContent = "0";
+counterElement.className = "oreCounter";
 
 image.addEventListener("click", () => {
   shop.addToCurrency(1);
@@ -31,7 +36,10 @@ image.addEventListener("click", () => {
 });
 
 const message = document.createElement("p");
+message.className = "gameMessage";
+
 const productionElement = document.createElement("p");
+productionElement.className = "productionRate";
 productionElement.textContent = "0 ores/sec";
 
 const buttons: HTMLButtonElement[] = [];
@@ -42,6 +50,7 @@ function createButton(
 ): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
+  button.className = "upgradeButton";
   button.textContent = `${name}: ${cost} ores`;
   button.addEventListener("click", () => {
     const purchased = shop.buy(name);
@@ -90,13 +99,29 @@ function update(now: number): void {
   requestAnimationFrame(update);
 }
 
-app.append(heading, image, counterElement, productionElement, message);
+app.className = "MoonMiners";
+
+const moonSection = document.createElement("section");
+moonSection.className = "moonSection";
+moonSection.append(image, counterElement, productionElement);
+
+const shopSection = document.createElement("section");
+shopSection.className = "shopSection";
+
+const upgradeButtons = document.createElement("div");
+upgradeButtons.className = "upgradeButtons";
+
+const shopHeading = document.createElement("h2");
+shopHeading.textContent = "Upgrades!";
+shopSection.append(shopHeading, message, upgradeButtons);
+
+app.append(heading, moonSection, shopSection);
 
 for (const item of Object.keys(items) as Array<keyof typeof items>) {
   const button = createButton(item, items[item].cost);
   button.dataset.item = item;
   buttons.push(button);
-  app.append(button);
+  upgradeButtons.append(button);
 }
 
 updateButtons();
