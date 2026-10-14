@@ -28,12 +28,91 @@ counterElement.id = "ores";
 counterElement.textContent = "0";
 counterElement.className = "oreCounter";
 
-image.addEventListener("click", () => {
+// new code starts here
+image.addEventListener("click", (event: MouseEvent) => {
   shop.addToCurrency(1);
-  counterElement.textContent = (shop.getCurrency().toFixed(1).toString()) +
-    "ores";
+  counterElement.textContent = shop.getCurrency().toFixed(1) + " ores";
   updateButtons();
+
+  playMoonPop();
+  spawnConfetti(event.clientX, event.clientY);
 });
+
+function playMoonPop(): void {
+  image.animate(
+    [
+      { transform: "scale(1)" },
+      { transform: "scale(0.88)" },
+      { transform: "scale(1.05)" },
+      { transform: "scale(1)" },
+    ],
+    { duration: 200, easing: "ease-out" },
+  );
+}
+
+const confettiColors = [
+  "#ffd966",
+  "#ff6b6b",
+  "#6bcbff",
+  "#9dff6b",
+  "#d96bff",
+  "#ffffff",
+];
+
+function spawnConfetti(x: number, y: number): void {
+  const pieceCount = 24;
+
+  for (let i = 0; i < pieceCount; i++) {
+    const piece = document.createElement("div");
+    const width = 6 + Math.random() * 6;
+    const height = width * 0.5;
+    const color =
+      confettiColors[Math.floor(Math.random() * confettiColors.length)];
+
+    piece.style.position = "fixed";
+    piece.style.left = `${x - width / 2}px`;
+    piece.style.top = `${y - height / 2}px`;
+    piece.style.width = `${width}px`;
+    piece.style.height = `${height}px`;
+    piece.style.backgroundColor = color;
+    piece.style.borderRadius = "2px";
+    piece.style.pointerEvents = "none";
+    piece.style.zIndex = "1000";
+    document.body.append(piece);
+
+    // Burst outward, biased upward, then fall with gravity
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 60 + Math.random() * 100;
+    const dx = Math.cos(angle) * distance;
+    const dy = Math.sin(angle) * distance - 60;
+    const spin = (Math.random() - 0.5) * 900;
+
+    const animation = piece.animate(
+      [
+        { transform: "translate(0, 0) rotate(0deg)", opacity: 1 },
+        {
+          transform: `translate(${dx}px, ${dy}px) rotate(${spin}deg)`,
+          opacity: 1,
+          offset: 0.5,
+        },
+        {
+          transform: `translate(${dx * 1.2}px, ${dy + 140}px) rotate(${
+            spin * 1.6
+          }deg)`,
+          opacity: 0,
+        },
+      ],
+      {
+        duration: 900 + Math.random() * 500,
+        easing: "cubic-bezier(0.2, 0.8, 0.4, 1)",
+        fill: "forwards",
+      },
+    );
+
+    animation.onfinish = () => piece.remove();
+  }
+}
+// new code ends here
 
 const message = document.createElement("p");
 message.className = "gameMessage";
