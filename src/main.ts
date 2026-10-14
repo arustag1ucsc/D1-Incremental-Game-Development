@@ -25,12 +25,13 @@ counterElement.textContent = "0";
 
 image.addEventListener("click", () => {
   shop.addToCurrency(1);
-  counterElement.textContent = (shop.getCurrency().toString()) + "ores";
+  counterElement.textContent = (shop.getCurrency().toFixed(1).toString()) +
+    "ores";
   updateButtons();
 });
 
 const message = document.createElement("p");
-message.textContent = "Your project starts here.";
+// message.textContent = "Your project starts here.";
 
 const buttons: HTMLButtonElement[] = [];
 
@@ -49,6 +50,7 @@ function createButton(
     } else {
       message.textContent = `You need ${cost - shop.getCurrency()} more ores!`;
     }
+    updateButtons();
   });
   return button;
 }
@@ -57,11 +59,37 @@ function updateButtons(): void {
   for (const button of buttons) {
     const item = button.dataset.item as keyof typeof items;
     const cost = items[item].cost;
+    const newQuantity = inventory.getItemQuanity(item);
 
     button.disabled = shop.getCurrency() < items[item].cost;
-    button.textContent = `${item}: ${cost.toFixed(2)} ores`;
+    button.textContent = `${item}: ${
+      Math.floor(cost)
+    } ores | Owned: ${newQuantity}`;
   }
 }
+
+let lastTime = performance.now();
+
+function update(now: number): void {
+  const elapsedSeconds = (now - lastTime) / 1000;
+  lastTime = now;
+
+  let totalProduction = 0;
+
+  for (const item of Object.keys(items) as Array<keyof typeof items>) {
+    totalProduction += items[item].quantity * items[item].oresPerSecond;
+  }
+
+  shop.addToCurrency(totalProduction * elapsedSeconds);
+
+  counterElement.textContent = `${shop.getCurrency().toFixed(0)} ores`;
+
+  updateButtons();
+
+  requestAnimationFrame(update);
+}
+
+app.append(heading, image, counterElement, message);
 
 for (const item of Object.keys(items) as Array<keyof typeof items>) {
   const button = createButton(item, items[item].cost);
@@ -70,15 +98,4 @@ for (const item of Object.keys(items) as Array<keyof typeof items>) {
   app.append(button);
 }
 
-// const pickaxeButton = document.createElement("button");
-// pickaxeButton.textContent = "Buy 1 pickaxe";
-// pickaxeButton.type = "button";
-// pickaxeButton.addEventListener("click", () => {
-//   if (shop.getCurrency() < items["pickaxe"].cost) {
-//   }
-// });
-
-//const pickaxebutton = createButton("pickaxe", items["pickaxe"].cost);
-//pickaxebutton.disabled = shop.getCurrency() < items["pickaxe.cost"];
-
-app.append(heading, image, counterElement, message);
+requestAnimationFrame(update);

@@ -11,10 +11,4 @@ export class Inventory {
   getItemQuanity(item: keyof typeof items): number {
     return items[item].quantity;
   }
-
-  // constructor() {
-  //   for (const item in this.items) {
-  //     item;
-  //   }
-  // }
 }
