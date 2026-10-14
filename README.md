@@ -35,14 +35,17 @@ npm run build
 ```
 ## Code Structure:
 - src/main.ts -- Creates game interface, contains button handler, updates ore count, manages upgrade buttons.
+- src/inventory.ts —- Manages the player's inventory. Updates the quantity of tools. 
+- src/items.ts -- Defines the available items and their costs and ores per second.
+- src/shop.ts -- Handles purchasing upgrades and checking ore costs.
 - src/style.css -- Stylizes the game's layout, colors, background, and buttons.
 - src/assets/ --  Contains images used in the game and other assets.
 - index.html -- Contains the main HTML page for the game.
 
 ## Revision Explanation
-- 6a5222e6b1eee90dfa1b6a22a37bad6134635455:
+- [6a5222e](https://github.com):
   We organized files to assist with shared behavior. The game is separated into main.ts, inventory.ts, items.ts, shop.ts. Files are imported into other files for reference and access to variables such as item cost.
-- 72ddcacd0832dbbf272de2f7eb09d76e5e3123e8:
+- [72ddcac](https://github.com):
 We added an update button in main.ts to handle requests for animation frames and to keep all the variables current to the player's actions. Production rate is now accurate to tools owned. We updated upgrade costs to be accurate to tool's uses and added a production statistics variable to be displayed in the game.
 
 ## Credits
