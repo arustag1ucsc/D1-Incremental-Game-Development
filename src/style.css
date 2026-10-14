@@ -110,6 +110,29 @@ body {
   cursor: not-allowed;
 }
 
+.moonSection {
+  position: relative;
+}
+
+.floatText {
+  position: absolute;
+  pointer-events: none;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #ffd966;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+  animation: floatUp 0.8s ease-out forwards;
+}
+
+@keyframes floatUp {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -150%);
+  }
 .parent {
   display: grid;
   place-items: center;
