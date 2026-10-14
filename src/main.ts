@@ -31,7 +31,8 @@ image.addEventListener("click", () => {
 });
 
 const message = document.createElement("p");
-// message.textContent = "Your project starts here.";
+const productionElement = document.createElement("p");
+productionElement.textContent = "0 ores/sec";
 
 const buttons: HTMLButtonElement[] = [];
 
@@ -83,13 +84,13 @@ function update(now: number): void {
   shop.addToCurrency(totalProduction * elapsedSeconds);
 
   counterElement.textContent = `${shop.getCurrency().toFixed(0)} ores`;
+  productionElement.textContent = `${totalProduction} ores/sec`;
 
   updateButtons();
-
   requestAnimationFrame(update);
 }
 
-app.append(heading, image, counterElement, message);
+app.append(heading, image, counterElement, productionElement, message);
 
 for (const item of Object.keys(items) as Array<keyof typeof items>) {
   const button = createButton(item, items[item].cost);
@@ -98,4 +99,5 @@ for (const item of Object.keys(items) as Array<keyof typeof items>) {
   app.append(button);
 }
 
+updateButtons();
 requestAnimationFrame(update);
