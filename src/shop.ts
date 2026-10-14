@@ -9,7 +9,9 @@ export class Shop {
   buy(item: keyof typeof items): boolean {
     if (items[item].cost > this.currency) return false;
     this.currency -= items[item].cost;
-    items[item].cost = Math.floor(items[item].cost * 1.25);
+
+    const multiplier = inventory.getItemQuanity("discount") > 0 ? 1.1 : 1.25;
+    items[item].cost = Math.floor(items[item].cost * multiplier);
     inventory.addToInventory(item);
     return true;
   }
