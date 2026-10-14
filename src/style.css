@@ -109,3 +109,9 @@ body {
   opacity: 0.45;
   cursor: not-allowed;
 }
+
+.parent {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
