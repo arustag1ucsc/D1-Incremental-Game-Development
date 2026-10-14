@@ -133,4 +133,8 @@ body {
     opacity: 0;
     transform: translate(-50%, -150%);
   }
+.parent {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
 }
