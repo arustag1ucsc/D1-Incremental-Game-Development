@@ -1,21 +1,15 @@
+import { items } from "./items.ts";
 export class Inventory {
-  items: Record<string, number> = {
-    "pickaxe": 0,
-    "drill": 0,
-    "jackhammer": 0,
-    "bulldozer": 0,
-  };
-
-  addToInventory(item: string) {
-    this.items[item]++;
+  addToInventory(item: keyof typeof items) {
+    items[item].quantity++;
   }
 
-  removeFromInventory(item: string) {
-    this.items[item]--;
+  removeFromInventory(item: keyof typeof items) {
+    items[item].quantity--;
   }
 
-  getItemQuanity(item: string): number {
-    return this.items[item];
+  getItemQuanity(item: keyof typeof items): number {
+    return items[item].quantity;
   }
 
   // constructor() {
